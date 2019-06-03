@@ -1,0 +1,113 @@
+//能进行多种功能选择
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+/**
+ * Project:二叉树基本操作的实现
+ */
+public class Main {
+	public static void main(String[] args) {
+		BinaryTreeNode btn =new BinaryTreeNode();
+		StringBuilder sb=new StringBuilder();
+		int flag=0;
+		int count=0;
+		ArrayList<Long> ls=new ArrayList<Long>();
+		System.out.println("请输入结点数据，并以任意字符结尾：");
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextLong()) {					//输入数据
+			ls.add(sc.nextLong());
+		}
+		long[] dataList=new long[ls.size()];
+		for(int i=0;i<ls.size();i++) {
+			dataList[i]=ls.get(i);
+		}
+		/*显示原始数据*/
+		System.out.print("原始数据为：{");
+		for(long temp:dataList) {
+			sb.append(temp+",");
+		}
+		sb.setCharAt(sb.length()-1, '}');
+		System.out.println(sb.toString());
+		/*建立二叉树*/
+		btn.createTree(dataList);
+		
+		System.out.print("--------二叉树基本操作的实现--------\n"
+							+ "1.层序遍历\n"
+							+"2.前序遍历\n"
+							+"3.中序遍历\n"
+							+"4.后序遍历\n"
+							+"5.统计叶子结点数\n"
+							+"6.二叉树的深度统计\n"
+							+"7.子树交换\n"
+							+"8.中序构建线索二叉树并以后继结点遍历\n");
+		System.out.println("请输入您想进行的操作的序号：");
+		
+		while(true) {
+			 Scanner input = new Scanner(System.in);
+			 String result = input.next();
+			 int number = Integer.valueOf(result);
+		switch(number) {
+		case 1:{
+			/*层级遍历*/
+			System.out.print("层级遍历结果：");
+			btn.levelOrder(btn.getRoot());
+		}break;
+		
+		case 2:{
+			/*前序遍历*/
+			System.out.print("前序遍历结果：");
+			btn.preOrder(btn.getRoot());
+			System.out.println();
+		}break;
+		
+		case 3:{
+			/*中序遍历*/
+			System.out.print("中序遍历结果：");
+			btn.inOrder(btn.getRoot());
+			System.out.println();
+		}break;
+		
+		case 4:{
+			/*后序遍历*/
+			System.out.print("后序遍历结果：");
+			btn.afterOrder(btn.getRoot());
+			System.out.println();
+		}break;
+		
+		case 5:{
+			/*统计叶子结点*/
+			System.out.print("统计叶子结点结果：");
+			System.out.println(btn.countLeaves(btn.getRoot()));
+		}break;
+		
+		case 6:{
+			/*二叉树的深度统计*/
+			System.out.print("统计二叉树深度结果：");
+			System.out.println(btn.countDepth(btn.getRoot()));
+		}break;
+		
+		case 7:{
+			/*子树交换*/
+			System.out.print("子树交换结果：");
+			btn.Exchange(btn.getRoot());
+			btn.levelOrder(btn.getRoot());//通过层序遍历，查看是否完成了子树交换
+			System.out.println();
+		}break;
+		
+		case 8:{
+			/*构造线索二叉树*/
+			ThreadBinaryTreeNode tbtn=new ThreadBinaryTreeNode();
+			tbtn.createThreadTree(dataList);
+			tbtn.inThreadOrder(tbtn.getRoot());
+			System.out.print("中序按后继结点遍历线索二叉树结果：");
+			tbtn.inThreadList(tbtn.getRoot());
+		}break;
+		
+		default:
+				System.out.println("NumberBeyondOptionalRange!");
+				break;
+			}
+		}
+	}
+}
